@@ -21,21 +21,21 @@ public class Controller implements KeyListener, ActionListener
     private Ship ship;
 
     /** When this timer goes off, it is time to refresh the animation */
-    private Timer refreshTimer; 
-    
-    /** Keeps track of the key press of the right arrow or D */ 
+    private Timer refreshTimer;
+
+    /** Keeps track of the key press of the right arrow or D */
     private boolean turningRight;
-    
+
     /** Keeps track of the key press of the left arrow or A */
     private boolean turningLeft;
-    
+
     /** Keeps track of the key press of the up arrow or W */
-    private boolean goingForward; 
-    
+    private boolean goingForward;
+
     /** Keeps track of the key press of the spacebar or down arrow */
     private boolean bulletFire;
-    
-    /** Keeps track if an asteroid was hit*/
+
+    /** Keeps track if an asteroid was hit */
     private boolean asteroidHit;
 
     /**
@@ -47,13 +47,13 @@ public class Controller implements KeyListener, ActionListener
 
     /** Number of lives left */
     private int lives;
-    
+
     /** Level of the game */
     private int level;
 
     /** The game display */
     private Display display;
-    
+
     /** Score of the game */
     private int score;
 
@@ -72,8 +72,8 @@ public class Controller implements KeyListener, ActionListener
         transitionTime = Long.MAX_VALUE;
 
         // Record the display object
-        display = new Display(this); 
-        
+        display = new Display(this);
+
         // Reset key presses
         goingForward = false;
         turningLeft = false;
@@ -101,7 +101,7 @@ public class Controller implements KeyListener, ActionListener
     {
         // Clear the screen, reset the level, and display the legend
         clear();
-        display.setLegend("Asteroids"); 
+        display.setLegend("Asteroids");
 
         // Place four asteroids near the corners of the screen.
         placeAsteroids();
@@ -125,8 +125,8 @@ public class Controller implements KeyListener, ActionListener
         Participant.expire(ship);
         ship = new Ship(SIZE / 2, SIZE / 2, -Math.PI / 2, this);
         addParticipant(ship);
-        display.setLegend(""); 
-        
+        display.setLegend("");
+
         // Resets the key presses
         turningLeft = false;
         turningRight = false;
@@ -139,10 +139,10 @@ public class Controller implements KeyListener, ActionListener
      */
     private void placeAsteroids ()
     {
-        addParticipant(new Asteroid(0, 2, -EDGE_OFFSET, EDGE_OFFSET, 3, this)); 
-        addParticipant(new Asteroid(0, 2, EDGE_OFFSET, -EDGE_OFFSET, 3, this)); 
+        addParticipant(new Asteroid(0, 2, -EDGE_OFFSET, EDGE_OFFSET, 3, this));
+        addParticipant(new Asteroid(0, 2, EDGE_OFFSET, -EDGE_OFFSET, 3, this));
         addParticipant(new Asteroid(0, 2, -EDGE_OFFSET, -EDGE_OFFSET, 3, this));
-        addParticipant(new Asteroid(0, 2, EDGE_OFFSET, EDGE_OFFSET, 3, this)); 
+        addParticipant(new Asteroid(0, 2, EDGE_OFFSET, EDGE_OFFSET, 3, this));
         for (int i = 1; i < this.level; i++)
         {
             addParticipant(new Asteroid(0, 2, -EDGE_OFFSET, EDGE_OFFSET, 3, this));
@@ -172,17 +172,17 @@ public class Controller implements KeyListener, ActionListener
 
         // Place the ship
         placeShip();
-        
+
         // Reset statistics
         lives = 3;
-        level = 1; 
+        level = 1;
         score = 0;
-        
+
         // Send statistics to the display
         display.setLives(lives);
         display.setLevel(level);
         display.setScore(score);
-        
+
         // Start listening to events (but don't listen twice)
         display.removeKeyListener(this);
         display.addKeyListener(this);
@@ -197,7 +197,7 @@ public class Controller implements KeyListener, ActionListener
     public void addParticipant (Participant p)
     {
         pstate.addParticipant(p);
-    } 
+    }
 
     /**
      * The ship has been destroyed
@@ -205,8 +205,8 @@ public class Controller implements KeyListener, ActionListener
     public void shipDestroyed ()
     {
         // Null out the ship
-        ship = null; 
-        
+        ship = null;
+
         // Display a legend
         display.setLegend("Ouch!");
 
@@ -217,7 +217,8 @@ public class Controller implements KeyListener, ActionListener
         // Since the ship was destroyed, schedule a transition
         scheduleTransition(END_DELAY);
     }
-     /**
+
+    /**
      * The score increases depending on what size asteroid was hit
      */
     public void scoreIncrease (int scoreIncrease)
@@ -240,10 +241,6 @@ public class Controller implements KeyListener, ActionListener
         {
             level++;
             display.setLegend("Level " + level);
-            lives = 3;
-            score = 0;
-            display.setLevel(level);
-            display.setLives(lives);
             display.setLevel(level);
             scheduleTransition(END_DELAY);
         }
@@ -269,7 +266,7 @@ public class Controller implements KeyListener, ActionListener
         {
             // Fixes an issue where the incorrect number of asteroids were added
             level = 1;
-	    display.setLevel(level);
+            display.setLevel(level);
             initialScreen();
         }
 
@@ -280,9 +277,9 @@ public class Controller implements KeyListener, ActionListener
             performTransition();
 
             // Move the participants to their new locations
-            pstate.moveParticipants(); 
-            
-            // Check key presses and perform the actions indicated 
+            pstate.moveParticipants();
+
+            // Check key presses and perform the actions indicated
             if (turningLeft && ship != null)
             {
                 ship.turnLeft();
@@ -297,9 +294,9 @@ public class Controller implements KeyListener, ActionListener
             }
             if (bulletFire && ship != null)
             {
-                addParticipant( new Bullet(ship.getXNose(), ship.getYNose(), ship.getRotation(), this)); 
+                addParticipant(new Bullet(ship.getXNose(), ship.getYNose(), ship.getRotation(), this));
                 bulletFire = false;
-                
+
                 pstate.trackBullets();
             }
             else if (ship != null)
@@ -335,19 +332,19 @@ public class Controller implements KeyListener, ActionListener
             // screen.
             if (lives <= 0)
             {
-                finalScreen(); 
+                finalScreen();
             }
             else if (lives > 0)
             {
                 placeShip();
-            } 
-            
+            }
+
             if (pstate.countAsteroids() == 0)
             {
-                
+
                 placeAsteroids();
-                
-                placeShip(); 
+
+                placeShip();
             }
         }
     }
@@ -361,7 +358,7 @@ public class Controller implements KeyListener, ActionListener
         if ((e.getKeyCode() == KeyEvent.VK_RIGHT || e.getKeyCode() == KeyEvent.VK_D) && ship != null)
         {
             turningRight = true;
-        } 
+        }
         if ((e.getKeyCode() == KeyEvent.VK_LEFT || e.getKeyCode() == KeyEvent.VK_A) && ship != null)
         {
             turningLeft = true;
@@ -373,9 +370,9 @@ public class Controller implements KeyListener, ActionListener
         if ((e.getKeyCode() == KeyEvent.VK_SPACE || e.getKeyCode() == KeyEvent.VK_DOWN) && ship != null)
         {
             bulletFire = true;
-	    asteroidHit = true;
+            asteroidHit = true;
         }
-        
+
     }
 
     /**
@@ -395,7 +392,7 @@ public class Controller implements KeyListener, ActionListener
         if ((e.getKeyCode() == KeyEvent.VK_RIGHT || e.getKeyCode() == KeyEvent.VK_D) && ship != null)
         {
             turningRight = false;
-        } 
+        }
         if ((e.getKeyCode() == KeyEvent.VK_LEFT || e.getKeyCode() == KeyEvent.VK_A) && ship != null)
         {
             turningLeft = false;
