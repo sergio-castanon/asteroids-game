@@ -35,9 +35,6 @@ public class Controller implements KeyListener, ActionListener
     /** Keeps track of the key press of the spacebar or down arrow */
     private boolean bulletFire;
 
-    /** Keeps track if an asteroid was hit */
-    private boolean asteroidHit;
-
     /**
      * The time at which a transition to a new stage of the game should be made. A transition is scheduled a few seconds
      * in the future to give the user time to see what has happened before doing something like going to a new level or
@@ -223,12 +220,8 @@ public class Controller implements KeyListener, ActionListener
      */
     public void scoreIncrease (int scoreIncrease)
     {
-        if (asteroidHit)
-        {
             this.score += scoreIncrease;
             display.changeScore(this.score);
-        }
-        asteroidHit = false;
     }
 
     /**
@@ -370,7 +363,6 @@ public class Controller implements KeyListener, ActionListener
         if ((e.getKeyCode() == KeyEvent.VK_SPACE || e.getKeyCode() == KeyEvent.VK_DOWN) && ship != null)
         {
             bulletFire = true;
-            asteroidHit = true;
         }
 
     }
