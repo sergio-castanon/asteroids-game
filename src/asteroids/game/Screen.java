@@ -16,6 +16,15 @@ public class Screen extends JPanel
     
     /** Game controller */
     private Controller controller; 
+    
+    /** Number of lives left */
+    private int lives;
+    
+    /** Level of the game */
+    private int level;    
+    
+    /** Score of the game */
+    private int score;
 
     /**
      * Creates an empty screen
@@ -38,6 +47,41 @@ public class Screen extends JPanel
     public void setLegend (String legend)
     {
         this.legend = legend;
+    }  
+    
+    /**
+    * Sets the lives
+    */
+    public void setLives (int lives) {
+        this.lives = lives;
+    }
+    
+    /**
+    * Sets the level
+    */
+    public void setLevel(int level) {
+        this.levels = level;
+    }    
+    
+    /**
+    * Sets the score
+    */
+    public void setScore(int score) {
+        this.score = score;
+    }    
+    
+    /**
+    * Decreases the lives count by 1
+    */
+    public void decreaseLives() {
+        this.lives--;
+    }    
+    
+    /**
+    * Increases the levels count by 1
+    */
+    public void increaseLevels() {
+        this.levels++;
     }
 
     /**
@@ -59,9 +103,29 @@ public class Screen extends JPanel
         while (iter.hasNext())
         {
             iter.next().draw(g);
+        } 
+        // Keeps track of the original font
+        Font font = g.getFont();
+        g.setFont(new Font("TimesRoman", font.getStyle(), 28));
+        
+        // The spacing between each ship
+        int incremenation = 30;
+        
+        // Keeps track of how many lives are left and need to be displayed
+        int countAtLives = lives;
+        
+        // Creates the graphics to keep track of the lives left
+        while (countAtLives > 0) {
+            g.drawString(Integer.toString(score), 55, 30);
+            g.drawLine(-20 + incremenation, 50, -30 + incremenation, 80);
+            g.drawLine(-20 + incremenation, 50, -10 + incremenation, 80);
+            g.drawLine(-28 + incremenation, 75, -12 + incremenation, 75);
+            incremenation+= 50;
+            countAtLives--;
         }
 
         // Draw the legend across the middle of the panel
+        g.setFont(font);
         int size = g.getFontMetrics().stringWidth(legend);
         g.drawString(legend, (SIZE - size) / 2, SIZE / 2); 
         
