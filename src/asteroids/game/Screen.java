@@ -21,7 +21,7 @@ public class Screen extends JPanel
     private int lives;
     
     /** Level of the game */
-    private int level;    
+    private int levels;    
     
     /** Score of the game */
     private int score;
