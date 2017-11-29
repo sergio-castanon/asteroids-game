@@ -86,6 +86,7 @@ public class Display extends JFrame
      */
      public void setLives (int lives) {
          this.lives = lives;
+         screen.setLives(this.lives);
      }
      
      /**
@@ -100,12 +101,14 @@ public class Display extends JFrame
      */
      public void setScore(int score) {
          this.score = score;
+         screen.setScore(this.score);
      }    
      
      /**
      * Decreases the lives count by 1
      */
      public void decreaseLives() {
+         screen.decreaseLives();
          this.lives--;
      }    
      
@@ -115,5 +118,14 @@ public class Display extends JFrame
      public void increaseLevels() {
          this.levels++;
       }
+    
+    /**
+    * Changes the score to the new Score
+    */
+    public void changeScore(int newScore) {
+        this.score = newScore;
+        System.out.println(score);
+        screen.setScore(this.score);
+    }
     
 }
