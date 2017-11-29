@@ -124,7 +124,6 @@ public class Display extends JFrame
     */
     public void changeScore(int newScore) {
         this.score = newScore;
-        System.out.println(score);
         screen.setScore(this.score);
     }
     
