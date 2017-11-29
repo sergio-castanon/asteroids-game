@@ -225,7 +225,6 @@ public class Controller implements KeyListener, ActionListener
         if (asteroidHit)
         {
             this.score += scoreIncrease;
-            System.out.println(score);
             display.changeScore(this.score);
         }
         asteroidHit = false;
