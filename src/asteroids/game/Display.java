@@ -13,6 +13,15 @@ public class Display extends JFrame
     /** The area where the action takes place */
     private Screen screen; 
     
+    /** Number of lives left */
+    private int lives;
+     
+    /** Level of the game */
+    private int levels;    
+     
+    /** Score of the game */
+    private int score;
+    
     /**
      * Lays out the game and creates the controller
      */
@@ -71,5 +80,40 @@ public class Display extends JFrame
     {
         screen.setLegend(s);
     }
+    
+     /**
+     * Sets the lives
+     */
+     public void setLives (int lives) {
+         this.lives = lives;
+     }
+     
+     /**
+     * Sets the level
+     */
+     public void setLevel(int level) {
+         this.levels = level;
+    }    
+     
+     /**
+     * Sets the score
+     */
+     public void setScore(int score) {
+         this.score = score;
+     }    
+     
+     /**
+     * Decreases the lives count by 1
+     */
+     public void decreaseLives() {
+         this.lives--;
+     }    
+     
+     /**
+     * Increases the levels count by 1
+     */
+     public void increaseLevels() {
+         this.levels++;
+      }
     
 }
