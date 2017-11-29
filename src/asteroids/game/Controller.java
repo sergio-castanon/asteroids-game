@@ -50,6 +50,9 @@ public class Controller implements KeyListener, ActionListener
 
     /** The game display */
     private Display display;
+    
+    /** Score of the game */
+    private int score;
 
     /**
      * Constructs a controller to coordinate the game and screen
@@ -170,8 +173,13 @@ public class Controller implements KeyListener, ActionListener
         // Reset statistics
         lives = 3;
         level = 1; 
+        score = 0;
         
-
+        // Send statistics to the display
+        display.setLives(lives);
+        display.setLevel(level);
+        display.setScore(score);
+        
         // Start listening to events (but don't listen twice)
         display.removeKeyListener(this);
         display.addKeyListener(this);
@@ -201,6 +209,7 @@ public class Controller implements KeyListener, ActionListener
 
         // Decrement lives
         lives--;
+        display.decreaseLives();
 
         // Since the ship was destroyed, schedule a transition
         scheduleTransition(END_DELAY);
@@ -215,7 +224,7 @@ public class Controller implements KeyListener, ActionListener
         if (pstate.countAsteroids() == 0)
         {
             level++; 
-            
+            display.setLevel(level);
             scheduleTransition(END_DELAY);
         }
     }
@@ -240,6 +249,7 @@ public class Controller implements KeyListener, ActionListener
         {
             // Fixes an issue where the incorrect number of asteroids were added
             level = 1;
+			display.setLevel(level);
             initialScreen();
         }
 
