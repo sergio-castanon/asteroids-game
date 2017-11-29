@@ -112,11 +112,12 @@ public class Screen extends JPanel
         int incremenation = 30;
         
         // Keeps track of how many lives are left and need to be displayed
-        int countAtLives = lives;
+        int countAtLives = lives; 
         
         // Creates the graphics to keep track of the lives left
         while (countAtLives > 0) {
-            g.drawString(Integer.toString(score), 55, 30);
+            g.drawString(Integer.toString(score), 55, 30); 
+            g.drawString(Integer.toString(levels), SIZE - 55, 30);
             g.drawLine(-20 + incremenation, 50, -30 + incremenation, 80);
             g.drawLine(-20 + incremenation, 50, -10 + incremenation, 80);
             g.drawLine(-28 + incremenation, 75, -12 + incremenation, 75);
