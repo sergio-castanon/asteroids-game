@@ -34,6 +34,9 @@ public class Controller implements KeyListener, ActionListener
     
     /** Keeps track of the key press of the spacebar or down arrow */
     private boolean bulletFire;
+    
+    /** Keeps track if an asteroid was hit*/
+    private boolean asteroidHit;
 
     /**
      * The time at which a transition to a new stage of the game should be made. A transition is scheduled a few seconds
@@ -214,6 +217,19 @@ public class Controller implements KeyListener, ActionListener
         // Since the ship was destroyed, schedule a transition
         scheduleTransition(END_DELAY);
     }
+     /**
+     * The score increases depending on what size asteroid was hit
+     */
+    public void scoreIncrease (int scoreIncrease)
+    {
+        if (asteroidHit)
+        {
+            this.score += scoreIncrease;
+            System.out.println(score);
+            display.changeScore(this.score);
+        }
+        asteroidHit = false;
+    }
 
     /**
      * An asteroid has been destroyed
@@ -223,7 +239,12 @@ public class Controller implements KeyListener, ActionListener
         // If all the asteroids are gone, schedule a transition
         if (pstate.countAsteroids() == 0)
         {
-            level++; 
+            level++;
+            display.setLegend("Level " + level);
+            lives = 3;
+            score = 0;
+            display.setLevel(level);
+            display.setLives(lives);
             display.setLevel(level);
             scheduleTransition(END_DELAY);
         }
@@ -249,7 +270,7 @@ public class Controller implements KeyListener, ActionListener
         {
             // Fixes an issue where the incorrect number of asteroids were added
             level = 1;
-			display.setLevel(level);
+	    display.setLevel(level);
             initialScreen();
         }
 
@@ -353,6 +374,7 @@ public class Controller implements KeyListener, ActionListener
         if ((e.getKeyCode() == KeyEvent.VK_SPACE || e.getKeyCode() == KeyEvent.VK_DOWN) && ship != null)
         {
             bulletFire = true;
+	    asteroidHit = true;
         }
         
     }
