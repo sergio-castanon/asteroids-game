@@ -167,7 +167,7 @@ public class Asteroid extends Participant implements ShipDestroyer
                 controller.scoreIncrease(20);
             } else if (this.size == 1) {
                 controller.scoreIncrease(50);  
-            } else {
+            } else if (this.size == 0) {
                 controller.scoreIncrease(100);
             }
             
