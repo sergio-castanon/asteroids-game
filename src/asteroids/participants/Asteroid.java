@@ -162,13 +162,21 @@ public class Asteroid extends Participant implements ShipDestroyer
                 controller.addParticipant(new Asteroid(RANDOM.nextInt(3), 0, this.getX(), this.getY(), RANDOM.nextInt(MAXIMUM_SMALL_ASTEROID_SPEED - MAXIMUM_MEDIUM_ASTEROID_SPEED) + MAXIMUM_MEDIUM_ASTEROID_SPEED, this.controller));
             }
             
-            // Sends what score should be added to the total score in the controller
-            if (this.size == 2) {
-                controller.scoreIncrease(20);
-            } else if (this.size == 1) {
-                controller.scoreIncrease(50);  
-            } else if (this.size == 0) {
+            // Sends what score should be added to the total score in the controller and plays the sound clip
+            if (this.size == 2) 
+            {
+                controller.scoreIncrease(20); 
+                controller.playClip(1);
+            } 
+            else if (this.size == 1) 
+            {
+                controller.scoreIncrease(50);
+                controller.playClip(2);
+            } 
+            else if (this.size == 0) 
+            {
                 controller.scoreIncrease(100);
+                controller.playClip(3);
             }
             
             // Expire the asteroid

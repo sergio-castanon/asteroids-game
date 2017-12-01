@@ -114,6 +114,9 @@ public class Ship extends Participant implements AsteroidDestroyer
             
             controller.addParticipant(new Debris(1, this.getX(), this.getY()));
             
+            // Plays sound clip
+            controller.playClip(10);
+            
             // Expire the ship from the game
             Participant.expire(this);
 

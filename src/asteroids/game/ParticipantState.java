@@ -83,7 +83,7 @@ public class ParticipantState
     /** 
      * Checks the bullet count in the play field and removes one if there are more than 8
      */
-    public void trackBullets ()
+    public int trackBullets ()
     {
         int count = 0;
         for (Participant p : participants)
@@ -102,12 +102,10 @@ public class ParticipantState
             if (p instanceof Bullet && !p.isExpired())
             {
                 count++;
-                if (count > 8)
-                {
-                    Participant.expire(p);
-                }
             }
         }
+        
+        return count;
         
     }
 

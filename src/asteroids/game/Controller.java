@@ -2,7 +2,13 @@ package asteroids.game;
 
 import static asteroids.game.Constants.*;
 import java.awt.event.*;
+import java.io.BufferedInputStream;
+import java.io.IOException;
 import java.util.Iterator;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.*;
 import asteroids.participants.Asteroid;
 import asteroids.participants.Bullet;
@@ -52,7 +58,13 @@ public class Controller implements KeyListener, ActionListener
     private Display display;
 
     /** Score of the game */
-    private int score;
+    private int score; 
+    
+    /** */
+    private Clip[] soundClips;
+    
+    /** */
+    private String[] soundStrings;
 
     /**
      * Constructs a controller to coordinate the game and screen
@@ -75,7 +87,14 @@ public class Controller implements KeyListener, ActionListener
         goingForward = false;
         turningLeft = false;
         turningRight = false;
-        bulletFire = false;
+        bulletFire = false; 
+        
+        //Set sound clips 
+        soundClips = new Clip[11];
+        soundStrings = new String[11];
+        fillSoundStrings(); 
+        createClips(soundStrings);
+        
 
         // Bring up the splash screen and start the refresh timer
         splashScreen();
@@ -83,6 +102,71 @@ public class Controller implements KeyListener, ActionListener
         refreshTimer.start();
     }
 
+    /**
+     * Fills the array containing the sound strings
+     */
+    private void fillSoundStrings ()
+    {
+        soundStrings[0] = "/sounds/bangAlienShip.wav";
+        soundStrings[1] = "/sounds/bangLarge.wav";
+        soundStrings[2] = "/sounds/bangMedium.wav";
+        soundStrings[3] = "/sounds/bangSmall.wav";
+        soundStrings[4] = "/sounds/beat1.wav";
+        soundStrings[5] = "/sounds/beat2.wav";
+        soundStrings[6] = "/sounds/fire.wav";
+        soundStrings[7] = "/sounds/saucerBig.wav";
+        soundStrings[8] = "/sounds/saucerSmall.wav";
+        soundStrings[9] = "/sounds/thrust.wav";
+        soundStrings[10] = "/sounds/bangShip.wav";
+    }
+    
+    /** 
+     * Creates the sound clips
+     */
+    private void createClips (String[] soundClip)
+    {
+        for (int i = 0; i < 11; i++)
+        {
+            try (BufferedInputStream sound = new BufferedInputStream(getClass().getResourceAsStream(soundClip[i])))
+            {
+                Clip clip = AudioSystem.getClip();
+                clip.open(AudioSystem.getAudioInputStream(sound));
+                soundClips[i] = clip;
+            }
+            catch (IOException e)
+            {
+                soundClips[i] = null;
+            }
+            catch (LineUnavailableException e)
+            {
+                soundClips[i] = null;
+            }
+            catch (UnsupportedAudioFileException e)
+            {
+                soundClips[i] = null;
+            }
+            
+        }
+    } 
+    
+    /**
+     * Plays a certain sound clip according to the int passed in. 
+     */
+    public void playClip (int soundClip)
+    {
+        if (soundClip > 11 || soundClip < 0)
+        {
+            throw new IllegalArgumentException();
+        }
+        
+        if (soundClips[soundClip].isRunning())
+        {
+            soundClips[soundClip].stop();
+        }
+        soundClips[soundClip].setFramePosition(0);
+        soundClips[soundClip].start();
+    }
+    
     /**
      * Returns the ship, or null if there isn't one
      */
@@ -281,16 +365,23 @@ public class Controller implements KeyListener, ActionListener
             {
                 ship.turnRight();
             }
-            if (goingForward && ship != null)
+            if (goingForward && ship != null && soundClips[9] != null)
             {
+                // Play the thrust clip
+                playClip(9);
+                
                 ship.accelerate();
             }
             if (bulletFire && ship != null)
             {
-                addParticipant(new Bullet(ship.getXNose(), ship.getYNose(), ship.getRotation(), this));
-                bulletFire = false;
+                if (pstate.trackBullets() < 8)
+                {
+                    addParticipant(new Bullet(ship.getXNose(), ship.getYNose(), ship.getRotation(), this));
+                    bulletFire = false;
 
-                pstate.trackBullets();
+                    // Play the firing clip
+                    playClip(6);
+                }
             }
             else if (ship != null)
             {
