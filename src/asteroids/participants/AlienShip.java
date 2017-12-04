@@ -27,15 +27,19 @@ public class AlienShip extends Participant implements ShipDestroyer, AsteroidDes
 //        setRotation(direction);
         
         Path2D.Double poly = new Path2D.Double();
-        poly.moveTo(20, 10);
-        poly.lineTo(40, 10);
-        poly.lineTo(55, 25);
-        poly.lineTo(40, 40);
-        poly.lineTo(20, 40);
-        poly.lineTo(5, 25);
-        poly.lineTo(55, 25);
-        poly.lineTo(5, 25);
+        poly.moveTo(15, 10);
+        poly.lineTo(35, 10);
+        poly.lineTo(45, 20);
+        poly.lineTo(35, 30);
+        poly.lineTo(15, 30);
+        poly.lineTo(5, 20);
+        poly.lineTo(45, 20);
+        poly.lineTo(5, 20); 
         poly.closePath();
+        poly.moveTo(34, 10);
+        poly.lineTo(30, 5);
+        poly.lineTo(20, 5);
+        poly.lineTo(16, 10);
         outline = poly;
         
         // Scale to the desired size
@@ -52,15 +56,10 @@ public class AlienShip extends Participant implements ShipDestroyer, AsteroidDes
     @Override
     public void collidedWith (Participant p)
     {
-        if (p instanceof ShipDestroyer)
+        if (p instanceof ShipDestroyer || p instanceof AsteroidDestroyer)
         {
             // Tell the controller the ship was destroyed
-            controller.shipDestroyed();
-        }
-        if (p instanceof AsteroidDestroyer) {
-
-            // Tell the controller the ship was destroyed
-            controller.asteroidDestroyed();
+            Participant.expire(this);
         }
 
     }

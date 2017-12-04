@@ -10,6 +10,7 @@ import javax.sound.sampled.Clip;
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.*;
+import asteroids.participants.AlienShip;
 import asteroids.participants.Asteroid;
 import asteroids.participants.Bullet;
 import asteroids.participants.Debris;
@@ -234,13 +235,17 @@ public class Controller implements KeyListener, ActionListener
     }
     
      /**
-     * Places alien ship at level 2
+     * Places alien ship beginning at level 2
      */
     private void placeAlienShip ()
     {
         if (this.level == 2) {
             alienShip = new AlienShip(1, this);
             addParticipant(alienShip);
+        } 
+        else if (this.level > 2)
+        {
+            addParticipant(new AlienShip(0, this));
         }
     }
 
@@ -316,6 +321,9 @@ public class Controller implements KeyListener, ActionListener
         scheduleTransition(END_DELAY);
     }
     
+    /** 
+     * The alien ship has been destroyed
+     */
     public void alienShipDestroyed ()
     {
         alienShip = null;
