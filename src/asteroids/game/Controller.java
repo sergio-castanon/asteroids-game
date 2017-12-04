@@ -98,7 +98,6 @@ public class Controller implements KeyListener, ActionListener
         soundStrings = new String[11];
         fillSoundStrings(); 
         createClips(soundStrings);
-        
 
         // Bring up the splash screen and start the refresh timer
         splashScreen();
@@ -177,6 +176,14 @@ public class Controller implements KeyListener, ActionListener
     public Ship getShip ()
     {
         return ship;
+    } 
+    
+    /**
+     * Returns the current levels
+     */
+    public int getLevel ()
+    {
+        return level;
     }
 
     /**
@@ -246,7 +253,7 @@ public class Controller implements KeyListener, ActionListener
         else if (this.level > 2)
         {
             addParticipant(new AlienShip(0, this));
-        }
+        } 
     }
 
     /**
@@ -279,7 +286,7 @@ public class Controller implements KeyListener, ActionListener
         // Reset statistics
         lives = 3;
         level = 1;
-        score = 0;
+        score = 0; 
 
         // Send statistics to the display
         display.setLives(lives);

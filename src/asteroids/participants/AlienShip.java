@@ -6,8 +6,10 @@ import java.awt.geom.AffineTransform;
 import java.awt.geom.Path2D;
 import asteroids.destroyers.AsteroidDestroyer;
 import asteroids.destroyers.ShipDestroyer;
+import asteroids.game.Constants;
 import asteroids.game.Controller;
 import asteroids.game.Participant;
+import asteroids.game.ParticipantCountdownTimer;
 
 /**
  * Represents the alien ship that appears in levels beginning with level 2. The ship moves in a zig zag pattern.
@@ -18,13 +20,20 @@ public class AlienShip extends Participant implements ShipDestroyer, AsteroidDes
     private Shape outline;
 
     /** Game controller */
-    private Controller controller;
+    private Controller controller; 
+    
+    /** Used for randomly changing direction every few seconds */
+    private ParticipantCountdownTimer changeDirection; 
+    
+    private ParticipantCountdownTimer newAlienShip;
+    
+    public double[] shipDirections = {0.0, 1.0, -1.0};
 
     public AlienShip (int size, Controller controller)
     {
         this.controller = controller;
 //        setPosition(x, y);
-//        setRotation(direction);
+        setVelocity(5, shipDirections[Constants.RANDOM.nextInt(3)]);
         
         Path2D.Double poly = new Path2D.Double();
         poly.moveTo(15, 10);
@@ -40,7 +49,13 @@ public class AlienShip extends Participant implements ShipDestroyer, AsteroidDes
         poly.lineTo(30, 5);
         poly.lineTo(20, 5);
         poly.lineTo(16, 10);
-        outline = poly;
+        outline = poly; 
+        
+        // Creates the timer for changing directions
+        new ParticipantCountdownTimer(this, "direction", 200); 
+        
+        //new ParticipantCountdownTimer(this, "new", (Constants.RANDOM.nextInt(6) + 5) * 100);
+        
         
         // Scale to the desired size
         double scale = ALIENSHIP_SCALE[size];
@@ -58,10 +73,27 @@ public class AlienShip extends Participant implements ShipDestroyer, AsteroidDes
     {
         if (p instanceof ShipDestroyer || p instanceof AsteroidDestroyer)
         {
+            new ParticipantCountdownTimer(this, "new", (Constants.RANDOM.nextInt(6) + 5) * 1000);
+            
             // Tell the controller the ship was destroyed
-            Participant.expire(this);
+            Participant.expire(this); 
         }
 
+    }
+    
+    @Override
+    public void countdownComplete (Object payload)
+    {
+        if (payload.equals("direction"))
+        {
+            this.setDirection(shipDirections[Constants.RANDOM.nextInt(3)]);
+            
+            new ParticipantCountdownTimer(this, "direction", 200);
+        }
+        if (payload.equals("new"))
+        {
+            controller.addParticipant(new AlienShip(1, controller)); 
+        }
     }
 
 }
