@@ -65,6 +65,9 @@ public class Controller implements KeyListener, ActionListener
     
     /** */
     private String[] soundStrings;
+    
+    /** Alien Ship */
+    private AlienShip alienShip;
 
     /**
      * Constructs a controller to coordinate the game and screen
@@ -229,6 +232,17 @@ public class Controller implements KeyListener, ActionListener
             addParticipant(new Asteroid(0, 2, -EDGE_OFFSET, EDGE_OFFSET, 3, this));
         }
     }
+    
+     /**
+     * Places alien ship at level 2
+     */
+    private void placeAlienShip ()
+    {
+        if (this.level == 2) {
+            alienShip = new AlienShip(1, this);
+            addParticipant(alienShip);
+        }
+    }
 
     /**
      * Clears the screen so that nothing is displayed
@@ -253,6 +267,9 @@ public class Controller implements KeyListener, ActionListener
 
         // Place the ship
         placeShip();
+        
+        // Place the alienShip
+        placeAlienShip();
 
         // Reset statistics
         lives = 3;
@@ -297,6 +314,11 @@ public class Controller implements KeyListener, ActionListener
 
         // Since the ship was destroyed, schedule a transition
         scheduleTransition(END_DELAY);
+    }
+    
+    public void alienShipDestroyed ()
+    {
+        alienShip = null;
     }
 
     /**
@@ -429,6 +451,8 @@ public class Controller implements KeyListener, ActionListener
                 placeAsteroids();
 
                 placeShip();
+                
+                placeAlienShip();
             }
         }
     }
