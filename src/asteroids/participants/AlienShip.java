@@ -1,6 +1,7 @@
 package asteroids.participants;
 
 import static asteroids.game.Constants.ALIENSHIP_SCALE;
+import static asteroids.game.Constants.SIZE;
 import java.awt.Shape;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Path2D;
@@ -32,7 +33,12 @@ public class AlienShip extends Participant implements ShipDestroyer, AsteroidDes
     public AlienShip (int size, Controller controller)
     {
         this.controller = controller;
-//        setPosition(x, y);
+        double side = Math.random() * 1;
+        if (side > 0.5) {
+          setPosition(0, Math.random() * SIZE);
+        } else {
+          setPosition(SIZE, Math.random() * SIZE);
+        }
         setVelocity(5, shipDirections[Constants.RANDOM.nextInt(3)]);
         
         Path2D.Double poly = new Path2D.Double();
