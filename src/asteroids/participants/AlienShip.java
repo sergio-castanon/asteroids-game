@@ -26,8 +26,6 @@ public class AlienShip extends Participant implements ShipDestroyer, AsteroidDes
     /** Used for randomly changing direction every few seconds */
     private ParticipantCountdownTimer changeDirection; 
     
-    private ParticipantCountdownTimer newAlienShip;
-    
     public double[] shipDirections = {0.0, 1.0, -1.0};
 
     public AlienShip (int size, Controller controller)
@@ -78,9 +76,7 @@ public class AlienShip extends Participant implements ShipDestroyer, AsteroidDes
     public void collidedWith (Participant p)
     {
         if (p instanceof ShipDestroyer || p instanceof AsteroidDestroyer)
-        {
-            new ParticipantCountdownTimer(this, "new", (Constants.RANDOM.nextInt(6) + 5) * 1000);
-            
+        {   
             // Tell the controller the ship was destroyed
             Participant.expire(this); 
         }
@@ -95,10 +91,6 @@ public class AlienShip extends Participant implements ShipDestroyer, AsteroidDes
             this.setDirection(shipDirections[Constants.RANDOM.nextInt(3)]);
             
             new ParticipantCountdownTimer(this, "direction", 200);
-        }
-        if (payload.equals("new"))
-        {
-            controller.addParticipant(new AlienShip(1, controller)); 
         }
     }
 

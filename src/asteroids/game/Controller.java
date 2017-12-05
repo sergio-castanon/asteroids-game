@@ -28,7 +28,9 @@ public class Controller implements KeyListener, ActionListener
     private Ship ship;
 
     /** When this timer goes off, it is time to refresh the animation */
-    private Timer refreshTimer;
+    private Timer refreshTimer; 
+    
+    private Timer newAlienShip;
 
     /** Keeps track of the key press of the right arrow or D */
     private boolean turningRight;
@@ -61,10 +63,10 @@ public class Controller implements KeyListener, ActionListener
     /** Score of the game */
     private int score; 
     
-    /** */
+    /** The sound clips */
     private Clip[] soundClips;
     
-    /** */
+    /** The sound clip file locations */
     private String[] soundStrings;
     
     /** Alien Ship */
@@ -246,13 +248,10 @@ public class Controller implements KeyListener, ActionListener
      */
     private void placeAlienShip ()
     {
-        if (this.level == 2) {
-            alienShip = new AlienShip(1, this);
-            addParticipant(alienShip);
-        } 
-        else if (this.level > 2)
-        {
-            addParticipant(new AlienShip(0, this));
+        if (this.level >= 2) 
+        { 
+            newAlienShip = new Timer((RANDOM.nextInt(6) + 5) * 1000, this); 
+            newAlienShip.start();
         } 
     }
 
@@ -333,7 +332,11 @@ public class Controller implements KeyListener, ActionListener
      */
     public void alienShipDestroyed ()
     {
-        alienShip = null;
+        alienShip = null; 
+        
+        // Timer for new alien ship in 5-10 secs
+        newAlienShip = new Timer((RANDOM.nextInt(6) + 5) * 1000, this); 
+        newAlienShip.start();
     }
 
     /**
@@ -382,6 +385,20 @@ public class Controller implements KeyListener, ActionListener
             level = 1;
             display.setLevel(level);
             initialScreen();
+        } 
+        
+        // Time for a new alien ship
+        else if (e.getSource() == newAlienShip)
+        {
+            if (this.level == 2 && ship != null) {
+                alienShip = new AlienShip(1, this);
+                addParticipant(alienShip); 
+            } 
+            else if (this.level > 2 && ship != null)
+            {
+                alienShip = new AlienShip(0, this);
+                addParticipant(alienShip); 
+            } 
         }
 
         // Time to refresh the screen and deal with keyboard input
