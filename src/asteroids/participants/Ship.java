@@ -18,6 +18,9 @@ public class Ship extends Participant implements AsteroidDestroyer
 
     /** Game controller */
     private Controller controller;
+    
+    /** Ship image */
+    private Path2D.Double poly;
 
     /**
      * Constructs a ship at the specified coordinates that is pointed in the given direction.
@@ -28,15 +31,45 @@ public class Ship extends Participant implements AsteroidDestroyer
         setPosition(x, y);
         setRotation(direction);
 
-        Path2D.Double poly = new Path2D.Double();
+        createShip();
+    }
+    /**
+     * Creates the shape of the ship
+     */
+    public void createShip() {
+        this.poly = new Path2D.Double();
         poly.moveTo(21, 0);
         poly.lineTo(-21, 12);
         poly.lineTo(-14, 10);
         poly.lineTo(-14, -10);
         poly.lineTo(-21, -12);
+        poly.lineTo(21, 0);
         poly.closePath();
-        outline = poly;
+        outline = poly; 
+    }
+    
+     /**
+     * Adds a line to the shape of the ship
+     */
+    public void addLine (double d, double e)
+    {
+        poly.lineTo(d, e);
+    }
 
+    /**
+     * Moves the adding starting point of the ship to the specified point
+     */
+    public void moveToShip (double d, double e)
+    {
+        poly.moveTo(d, e);
+    }
+
+    /**
+     * Resets the shape of the ship
+     */
+    public void resetShape ()
+    {
+        poly.reset();
     }
 
     /**
