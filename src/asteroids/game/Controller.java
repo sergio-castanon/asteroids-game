@@ -408,6 +408,10 @@ public class Controller implements KeyListener, ActionListener
                 playClip(9);
                 
                 ship.accelerate();
+                
+                ship.moveToShip(-14, -5);
+                ship.addLine(-24, 0);
+                ship.addLine(-14, 5);
             }
             if (bulletFire && ship != null)
             {
@@ -522,6 +526,8 @@ public class Controller implements KeyListener, ActionListener
         if ((e.getKeyCode() == KeyEvent.VK_UP || e.getKeyCode() == KeyEvent.VK_W) && ship != null)
         {
             goingForward = false;
+            ship.resetShape();
+            ship.createShip();
         }
         if ((e.getKeyCode() == KeyEvent.VK_SPACE || e.getKeyCode() == KeyEvent.VK_DOWN || e.getKeyCode() == KeyEvent.VK_S) && ship != null)
         {
