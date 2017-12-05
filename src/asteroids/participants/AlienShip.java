@@ -21,24 +21,30 @@ public class AlienShip extends Participant implements ShipDestroyer, AsteroidDes
     private Shape outline;
 
     /** Game controller */
-    private Controller controller; 
-    
+    private Controller controller;
+
     /** Used for randomly changing direction every few seconds */
-    private ParticipantCountdownTimer changeDirection; 
-    
-    public double[] shipDirections = {0.0, 1.0, -1.0};
+    private ParticipantCountdownTimer changeDirection;
+
+    /** Indicates size of the alien ship (0 for small and 1 for medium) */
+    private int size;
+
+    public double[] shipDirections = { 0.0, 1.0, -1.0 };
 
     public AlienShip (int size, Controller controller)
     {
         this.controller = controller;
         double side = Math.random() * 1;
-        if (side > 0.5) {
-          setPosition(0, Math.random() * SIZE);
-        } else {
-          setPosition(SIZE, Math.random() * SIZE);
+        if (side > 0.5)
+        {
+            setPosition(0, Math.random() * SIZE);
+        }
+        else
+        {
+            setPosition(SIZE, Math.random() * SIZE);
         }
         setVelocity(5, shipDirections[Constants.RANDOM.nextInt(3)]);
-        
+
         Path2D.Double poly = new Path2D.Double();
         poly.moveTo(15, 10);
         poly.lineTo(35, 10);
@@ -47,20 +53,25 @@ public class AlienShip extends Participant implements ShipDestroyer, AsteroidDes
         poly.lineTo(15, 30);
         poly.lineTo(5, 20);
         poly.lineTo(45, 20);
-        poly.lineTo(5, 20); 
+        poly.lineTo(5, 20);
         poly.closePath();
         poly.moveTo(34, 10);
         poly.lineTo(30, 5);
         poly.lineTo(20, 5);
         poly.lineTo(16, 10);
-        outline = poly; 
-        
+        outline = poly;
+
         // Creates the timer for changing directions
-        new ParticipantCountdownTimer(this, "direction", 200); 
-        
-        //new ParticipantCountdownTimer(this, "new", (Constants.RANDOM.nextInt(6) + 5) * 100);
-        
-        
+        if (size == 0)
+        {
+            setVelocity(6, shipDirections[Constants.RANDOM.nextInt(3)]);
+            new ParticipantCountdownTimer(this, "direction", 200);
+        }
+        else
+        {
+            setVelocity(4, shipDirections[Constants.RANDOM.nextInt(3)]);
+            new ParticipantCountdownTimer(this, "direction", 600);
+        }
         // Scale to the desired size
         double scale = ALIENSHIP_SCALE[size];
         poly.transform(AffineTransform.getScaleInstance(scale, scale));
@@ -76,21 +87,45 @@ public class AlienShip extends Participant implements ShipDestroyer, AsteroidDes
     public void collidedWith (Participant p)
     {
         if (p instanceof ShipDestroyer || p instanceof AsteroidDestroyer)
-        {   
+        {
             // Tell the controller the ship was destroyed
-            Participant.expire(this); 
+            Participant.expire(this);
+            controller.playClip(0);
+
+            // Creates debris
+            for (int i = 0; i < 4; i++)
+            {
+                controller.addParticipant(new Debris(0, this.getX(), this.getY()));
+            }
+
+            // Increases score based on alien ship size
+            if (this.size == 0)
+            {
+                controller.scoreIncrease(1000);
+            }
+            if (this.size == 1)
+            {
+                controller.scoreIncrease(200);
+            }
         }
 
     }
-    
+
     @Override
     public void countdownComplete (Object payload)
     {
         if (payload.equals("direction"))
         {
             this.setDirection(shipDirections[Constants.RANDOM.nextInt(3)]);
-            
-            new ParticipantCountdownTimer(this, "direction", 200);
+
+            if (this.size == 0)
+            {
+                new ParticipantCountdownTimer(this, "direction", 200);
+            }
+            else
+            {
+                new ParticipantCountdownTimer(this, "direction", 600);
+            }
         }
     }
 

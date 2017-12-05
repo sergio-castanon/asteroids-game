@@ -30,6 +30,7 @@ public class Controller implements KeyListener, ActionListener
     /** When this timer goes off, it is time to refresh the animation */
     private Timer refreshTimer; 
     
+    /** When this timer goes off, it is time to place an alien ship */
     private Timer newAlienShip;
 
     /** Keeps track of the key press of the right arrow or D */
@@ -250,7 +251,7 @@ public class Controller implements KeyListener, ActionListener
     {
         if (this.level >= 2) 
         { 
-            newAlienShip = new Timer((RANDOM.nextInt(6) + 5) * 1000, this); 
+            newAlienShip = new Timer(((RANDOM.nextInt(6) + 5) * 1000) + END_DELAY, this); 
             newAlienShip.start();
         } 
     }
@@ -262,7 +263,8 @@ public class Controller implements KeyListener, ActionListener
     {
         pstate.clear();
         display.setLegend("");
-        ship = null;
+        ship = null; 
+        alienShip = null;
     }
 
     /**
