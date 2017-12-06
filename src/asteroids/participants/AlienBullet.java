@@ -15,7 +15,10 @@ public class AlienBullet extends Bullet implements ShipDestroyer
     @Override 
     public void collidedWith (Participant p)
     {
-        Participant.expire(this);
+        if (!(p instanceof AlienBullet))
+        {
+            Participant.expire(this);
+        }
     }
 
 }

@@ -123,7 +123,8 @@ public class Controller implements KeyListener, ActionListener
      */
     public void isEnhanced() {
         isEnhanced = true;
-        display.isEnhanced();
+        display.isEnhanced(); 
+    }
     
 
     /**
@@ -272,7 +273,7 @@ public class Controller implements KeyListener, ActionListener
             newAlienShip = new Timer(((RANDOM.nextInt(6) + 5) * 1000) + END_DELAY, this); 
             newAlienShip.start();
             
-            alienFireBullet = new Timer(((RANDOM.nextInt(6) + 1) * 1000) + END_DELAY, this);
+            alienFireBullet = new Timer(((RANDOM.nextInt(4) + 1) * 1000) + END_DELAY, this);
             alienFireBullet.start();
         } 
     }
@@ -359,7 +360,10 @@ public class Controller implements KeyListener, ActionListener
         
         // Timer for new alien ship in 5-10 secs
         newAlienShip = new Timer((RANDOM.nextInt(6) + 5) * 1000, this); 
-        newAlienShip.start();
+        newAlienShip.start(); 
+        
+        alienFireBullet = new Timer(((RANDOM.nextInt(4) + 1) * 1000) + END_DELAY, this);
+        alienFireBullet.start();
     }
 
     /**
@@ -422,13 +426,13 @@ public class Controller implements KeyListener, ActionListener
         else if (e.getSource() == newAlienShip && alienShip == null)
         {
             if (this.level == 2 && ship != null) {
-                Participant.expire(alienShip);
+                //Participant.expire(alienShip);
                 alienShip = new AlienShip(1, this);
                 addParticipant(alienShip); 
             } 
             else if (this.level > 2 && ship != null)
             {
-                Participant.expire(alienShip);
+                //Participant.expire(alienShip);
                 alienShip = new AlienShip(0, this);
                 addParticipant(alienShip); 
             } 
@@ -442,7 +446,7 @@ public class Controller implements KeyListener, ActionListener
                 {
                     addParticipant(new AlienBullet(alienShip.getXRight(), alienShip.getYRight(), RANDOM.nextDouble() * 2 * Math.PI, this));
                 }
-                else if (ship.getX() < SIZE / 2 && alienShip.getX() > SIZE / 2)
+                else
                 {
                     addParticipant(new AlienBullet(alienShip.getXLeft(), alienShip.getYLeft(), RANDOM.nextDouble() * 2 * Math.PI, this));
                 }

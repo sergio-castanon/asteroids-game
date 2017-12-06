@@ -129,4 +129,10 @@ public class Display extends JFrame
         screen.setScore(newScore);
     }
     
+    /**
+     * Sets enhanced mode to true
+     */
+    public void isEnhanced() {
+        screen.isEnhanced();
+    }
 }

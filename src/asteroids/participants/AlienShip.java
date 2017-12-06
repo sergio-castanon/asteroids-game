@@ -90,7 +90,8 @@ public class AlienShip extends Participant implements ShipDestroyer, AsteroidDes
         if (p instanceof ShipDestroyer || p instanceof AsteroidDestroyer)
         {
             // Tell the controller the ship was destroyed
-            Participant.expire(this);
+            Participant.expire(this); 
+            controller.alienShipDestroyed();
             controller.playClip(0);
 
             // Creates debris
