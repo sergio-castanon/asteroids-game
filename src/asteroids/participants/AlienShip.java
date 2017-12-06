@@ -5,6 +5,7 @@ import static asteroids.game.Constants.SIZE;
 import java.awt.Shape;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Path2D;
+import java.awt.geom.Point2D;
 import asteroids.destroyers.AsteroidDestroyer;
 import asteroids.destroyers.ShipDestroyer;
 import asteroids.game.Constants;
@@ -109,6 +110,46 @@ public class AlienShip extends Participant implements ShipDestroyer, AsteroidDes
             }
         }
 
+    } 
+    
+    /**
+     * Returns the x-coordinate of the point on the screen where the ship's left side is located.
+     */
+    public double getXLeft ()
+    {
+        Point2D.Double point = new Point2D.Double(5, 20);
+        transformPoint(point);
+        return point.getX();
+    }
+
+    /**
+     * Returns the y-coordinate of the point on the screen where the ship's left side is located.
+     */
+    public double getYLeft ()
+    {
+        Point2D.Double point = new Point2D.Double(5, 20);
+        transformPoint(point);
+        return point.getY();
+    }
+    
+    /**
+     * Returns the x-coordinate of the point on the screen where the ship's right side is located.
+     */
+    public double getXRight ()
+    {
+        Point2D.Double point = new Point2D.Double(45, 20);
+        transformPoint(point);
+        return point.getX();
+    }
+
+    /**
+     * Returns the y-coordinate of the point on the screen where the ship's right side is located.
+     */
+    public double getYRight ()
+    {
+        Point2D.Double point = new Point2D.Double(45, 20);
+        transformPoint(point);
+        return point.getY();
     }
 
     @Override
