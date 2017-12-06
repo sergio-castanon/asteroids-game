@@ -377,6 +377,10 @@ public class Controller implements KeyListener, ActionListener
         if (pstate.countAsteroids() == 0)
         {
             level++;
+            if (isEnhanced) {
+                lives++;
+                display.increaseLives();
+            }
             display.setLegend("Level " + level);
             display.setLevel(level);
             scheduleTransition(END_DELAY);
