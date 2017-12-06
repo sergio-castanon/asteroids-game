@@ -567,6 +567,20 @@ public class Controller implements KeyListener, ActionListener
         {
             bulletFire = true;
         }
+        if (isEnhanced) {
+            if (e.getKeyCode() == KeyEvent.VK_L) {
+                turningRight = true;
+            }
+            if (e.getKeyCode() == KeyEvent.VK_J) {
+                turningLeft = true;
+            }
+            if (e.getKeyCode() == KeyEvent.VK_I) {
+                goingForward = true;
+            }
+            if (e.getKeyCode() == KeyEvent.VK_K) {
+                bulletFire = true;
+            }
+        }
 
     }
 
@@ -601,6 +615,22 @@ public class Controller implements KeyListener, ActionListener
         if ((e.getKeyCode() == KeyEvent.VK_SPACE || e.getKeyCode() == KeyEvent.VK_DOWN || e.getKeyCode() == KeyEvent.VK_S) && ship != null)
         {
             bulletFire = false;
+        }
+        if (isEnhanced) {
+            if (e.getKeyCode() == KeyEvent.VK_L) {
+                turningRight = false;
+            }
+            if (e.getKeyCode() == KeyEvent.VK_J) {
+                turningLeft = false;
+            }
+            if (e.getKeyCode() == KeyEvent.VK_I) {
+                goingForward = false;
+                ship.resetShape();
+                ship.createShip();
+            }
+            if (e.getKeyCode() == KeyEvent.VK_K) {
+                bulletFire = false;
+            }
         }
     }
 }
