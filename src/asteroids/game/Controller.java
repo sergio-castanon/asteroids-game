@@ -72,6 +72,9 @@ public class Controller implements KeyListener, ActionListener
     
     /** Alien Ship */
     private AlienShip alienShip;
+    
+    /** Keeps track if game is enhanced version or not */
+    private boolean isEnhanced = false;
 
     /**
      * Constructs a controller to coordinate the game and screen
@@ -89,6 +92,9 @@ public class Controller implements KeyListener, ActionListener
 
         // Record the display object
         display = new Display(this);
+        
+        // Resets Session High Score
+        Statistics.resetSessionHighScore();
 
         // Reset key presses
         goingForward = false;
@@ -107,6 +113,14 @@ public class Controller implements KeyListener, ActionListener
         display.setVisible(true);
         refreshTimer.start();
     }
+    
+    /**
+     * Changes the version of the game to enhanced
+     */
+    public void isEnhanced() {
+        isEnhanced = true;
+        display.isEnhanced();
+    
 
     /**
      * Fills the array containing the sound strings
@@ -348,6 +362,10 @@ public class Controller implements KeyListener, ActionListener
     {
             this.score += scoreIncrease;
             display.changeScore(this.score);
+            if (isEnhanced) {
+                Statistics.setHighScore(score);
+                Statistics.setSessionHighScore(score);
+            }
     }
 
     /**
