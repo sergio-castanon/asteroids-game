@@ -108,6 +108,12 @@ public class Display extends JFrame
      public void decreaseLives() {
          screen.decreaseLives();
      }    
+     /**
+     * Increases the lives count by 1
+     */
+     public void increaseLives() {
+         screen.increasesLives();
+     } 
      
      /**
      * Increases the levels count by 1

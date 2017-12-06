@@ -25,6 +25,9 @@ public class Screen extends JPanel
     
     /** Score of the game */
     private int score;
+    
+    /** Keeps track if the game is enhanced */
+    private boolean isEnhanced = false;
 
     /**
      * Creates an empty screen
@@ -56,6 +59,14 @@ public class Screen extends JPanel
         this.lives = lives;
     }
     
+     /**
+     * Increases the lives count by 1
+     */
+    public void increasesLives ()
+    {
+        this.lives++;
+    }
+    
     /**
     * Sets the level
     */
@@ -83,6 +94,13 @@ public class Screen extends JPanel
     public void increaseLevels() {
         this.levels++;
     }
+    
+     /**
+     * Sets enhanced mode to true
+     */
+    public void isEnhanced() {
+        this.isEnhanced = true;
+    }
 
     /**
      * Paint the participants onto this panel
@@ -106,7 +124,6 @@ public class Screen extends JPanel
         } 
         // Keeps track of the original font
         Font font = g.getFont();
-        g.setFont(new Font("TimesRoman", font.getStyle(), 28));
         
         // The spacing between each ship
         int incremenation = 30;
@@ -116,11 +133,19 @@ public class Screen extends JPanel
         
         // Creates the graphics to keep track of the lives left
         while (countAtLives > 0) {
+            g.setFont(new Font("TimesRoman", font.getStyle(), 28));
             g.drawString(Integer.toString(score), 55, 30); 
             g.drawString(Integer.toString(levels), SIZE - 55, 30);
             g.drawLine(-20 + incremenation, 50, -30 + incremenation, 80);
             g.drawLine(-20 + incremenation, 50, -10 + incremenation, 80);
             g.drawLine(-28 + incremenation, 75, -12 + incremenation, 75);
+            if (isEnhanced) {
+                g.setFont(new Font("TimesRoman", font.getStyle(), 20));
+                g.drawString("Overall High Score", 5, 105);
+                g.drawString(Integer.toString(Statistics.getHighScore()), 190, 105);
+                g.drawString("Your High Score", 5, 125);
+                g.drawString(Integer.toString(Statistics.getSessionHighScore()), 190, 125);
+            }
             incremenation+= 50;
             countAtLives--;
         }

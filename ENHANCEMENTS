@@ -1,2 +1,9 @@
 Put detailed information about all extra credit enhancements here.  
 
+The overall high score for the local machine is displayed directly below the lives in the top left corner. Every time the high score 
+is changed, it is saved into the scores file. The file is searched through using an optimization loop. The highest score out of all
+is found and displayed. The overall high score updates during the game if the player manages to score higher.
+
+Below the overall high score is the high score for the player in session. Every time a new screen is opened, the high score is set
+to zero, as a new session has begun. However, the score does not reset when the new game button is pressed. The high school updates
+every time the player scores above the player's personal high score during the game.
