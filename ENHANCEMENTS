@@ -7,3 +7,7 @@ is found and displayed. The overall high score updates during the game if the pl
 Below the overall high score is the high score for the player in session. Every time a new screen is opened, the high score is set
 to zero, as a new session has begun. However, the score does not reset when the new game button is pressed. The high school updates
 every time the player scores above the player's personal high score during the game.
+
+Every time the player advances a level, an extra life is added to the player's life line. It is also displayed on the screen.
+
+The game can be played on a new set of keys. L is to move right; J is to move left; K is to fire a bullet; I is to accelerate. 
