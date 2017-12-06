@@ -56,6 +56,14 @@ public class Screen extends JPanel
         this.lives = lives;
     }
     
+     /**
+     * Increases the lives count by 1
+     */
+    public void increasesLives ()
+    {
+        this.lives++;
+    }
+    
     /**
     * Sets the level
     */
