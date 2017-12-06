@@ -3,7 +3,9 @@ package asteroids.participants;
 import java.awt.Shape;
 import java.awt.geom.Ellipse2D;
 import java.awt.geom.Path2D;
+import asteroids.destroyers.AlienShipDestroyer;
 import asteroids.destroyers.AsteroidDestroyer;
+import asteroids.destroyers.Bullet;
 import asteroids.game.Constants;
 import asteroids.game.Controller;
 import asteroids.game.Participant;
@@ -12,7 +14,7 @@ import asteroids.game.ParticipantCountdownTimer;
 /**
  * Represents bullets
  */
-public class Bullet extends Participant implements AsteroidDestroyer
+public class ShipBullet extends Participant implements Bullet, AsteroidDestroyer, AlienShipDestroyer
 {
     /** The outline of the bullet */
     private Shape outline; 
@@ -27,7 +29,7 @@ public class Bullet extends Participant implements AsteroidDestroyer
      * Creates a bullet and places it at the ship's nose with the velocity being the BULLET_SPEED and the rotation of the ship. 
      * A bullet has a timer which goes off after BULLET_DURATION and removes the bullet from the game.
      */
-    public Bullet (double x, double y, double direction, Controller controller)
+    public ShipBullet (double x, double y, double direction, Controller controller)
     {
         // Creates the bullet 
         this.controller = controller;
@@ -56,7 +58,7 @@ public class Bullet extends Participant implements AsteroidDestroyer
     @Override
     public void collidedWith (Participant p)
     {
-            Participant.expire(this);
+        Participant.expire(this);
     }
     
     /**

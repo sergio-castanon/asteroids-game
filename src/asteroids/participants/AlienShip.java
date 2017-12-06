@@ -6,6 +6,7 @@ import java.awt.Shape;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Path2D;
 import java.awt.geom.Point2D;
+import asteroids.destroyers.AlienShipDestroyer;
 import asteroids.destroyers.AsteroidDestroyer;
 import asteroids.destroyers.ShipDestroyer;
 import asteroids.game.Constants;
@@ -87,7 +88,7 @@ public class AlienShip extends Participant implements ShipDestroyer, AsteroidDes
     @Override
     public void collidedWith (Participant p)
     {
-        if (p instanceof ShipDestroyer || p instanceof AsteroidDestroyer)
+        if (p instanceof AlienShipDestroyer)
         {
             // Tell the controller the ship was destroyed
             Participant.expire(this); 

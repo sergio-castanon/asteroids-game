@@ -13,7 +13,7 @@ import javax.swing.*;
 import asteroids.participants.AlienBullet;
 import asteroids.participants.AlienShip;
 import asteroids.participants.Asteroid;
-import asteroids.participants.Bullet;
+import asteroids.participants.ShipBullet;
 import asteroids.participants.Debris;
 import asteroids.participants.Ship;
 
@@ -486,7 +486,7 @@ public class Controller implements KeyListener, ActionListener
             {
                 if (pstate.trackBullets() < 8)
                 {
-                    addParticipant(new Bullet(ship.getXNose(), ship.getYNose(), ship.getRotation(), this));
+                    addParticipant(new ShipBullet(ship.getXNose(), ship.getYNose(), ship.getRotation(), this));
                     bulletFire = false;
 
                     // Play the firing clip
