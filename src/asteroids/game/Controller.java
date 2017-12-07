@@ -33,9 +33,6 @@ public class Controller implements KeyListener, ActionListener
     
     /** When this timer goes off, it is time to place an alien ship */
     private Timer newAlienShip; 
-    
-    /** When this timer goes off, it is time to fire a bullet */
-    private Timer alienFireBullet;
 
     /** Keeps track of the key press of the right arrow or D */
     private boolean turningRight;
@@ -125,7 +122,13 @@ public class Controller implements KeyListener, ActionListener
         isEnhanced = true;
         display.isEnhanced(); 
     }
-    
+    /**
+     * Returns if the game is enhanced
+     */
+    public boolean enhanced ()
+    {
+        return isEnhanced;
+    }
 
     /**
      * Fills the array containing the sound strings
@@ -272,9 +275,6 @@ public class Controller implements KeyListener, ActionListener
         { 
             newAlienShip = new Timer(((RANDOM.nextInt(6) + 5) * 1000) + END_DELAY, this); 
             newAlienShip.start();
-            
-            alienFireBullet = new Timer(((RANDOM.nextInt(4) + 1) * 1000) + END_DELAY, this);
-            alienFireBullet.start();
         } 
     }
 
@@ -361,9 +361,6 @@ public class Controller implements KeyListener, ActionListener
         // Timer for new alien ship in 5-10 secs
         newAlienShip = new Timer((RANDOM.nextInt(6) + 5) * 1000, this); 
         newAlienShip.start(); 
-        
-        alienFireBullet = new Timer(((RANDOM.nextInt(4) + 1) * 1000) + END_DELAY, this);
-        alienFireBullet.start();
     }
 
     /**
@@ -437,21 +434,6 @@ public class Controller implements KeyListener, ActionListener
                 addParticipant(alienShip); 
             } 
         }
-        
-        else if (e.getSource() == alienFireBullet)
-        {
-            if (this.level >= 2 && ship != null && alienShip != null)
-            {
-                if (ship.getX() > SIZE / 2 && alienShip.getX() < SIZE / 2)
-                {
-                    addParticipant(new AlienBullet(alienShip.getXRight(), alienShip.getYRight(), RANDOM.nextDouble() * 2 * Math.PI, this));
-                }
-                else
-                {
-                    addParticipant(new AlienBullet(alienShip.getXLeft(), alienShip.getYLeft(), RANDOM.nextDouble() * 2 * Math.PI, this));
-                }
-            }
-        }
 
         // Time to refresh the screen and deal with keyboard input
         else if (e.getSource() == refreshTimer)
@@ -478,9 +460,17 @@ public class Controller implements KeyListener, ActionListener
                 
                 ship.accelerate();
                 
-                ship.moveToShip(-14, -5);
-                ship.addLine(-24, 0);
-                ship.addLine(-14, 5);
+                if (isEnhanced == false)
+                {
+                    ship.moveToShip(-14, -5);
+                    ship.addLine(-24, 0);
+                    ship.addLine(-14, 5);
+                }
+                else
+                {
+                    ship.resetShape();
+                    ship.createShipE();
+                }
             }
             if (bulletFire && ship != null)
             {
@@ -610,7 +600,15 @@ public class Controller implements KeyListener, ActionListener
         {
             goingForward = false;
             ship.resetShape();
-            ship.createShip();
+            if (isEnhanced == false)
+            {
+                ship.createShip();
+            }
+            else
+            {
+                ship.createShipE();
+                ship.createPersonStanding();
+            }
         }
         if ((e.getKeyCode() == KeyEvent.VK_SPACE || e.getKeyCode() == KeyEvent.VK_DOWN || e.getKeyCode() == KeyEvent.VK_S) && ship != null)
         {
@@ -626,7 +624,15 @@ public class Controller implements KeyListener, ActionListener
             if (e.getKeyCode() == KeyEvent.VK_I) {
                 goingForward = false;
                 ship.resetShape();
-                ship.createShip();
+                if (isEnhanced == false)
+                {
+                    ship.createShip();
+                }
+                else
+                {
+                    ship.createShipE();
+                    ship.createPersonStanding();
+                }
             }
             if (e.getKeyCode() == KeyEvent.VK_K) {
                 bulletFire = false;
