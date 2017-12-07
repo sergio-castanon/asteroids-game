@@ -1,13 +1,17 @@
 Put detailed information about all extra credit enhancements here.  
 
-The overall high score for the local machine is displayed directly below the lives in the top left corner. Every time the high score 
+1. The overall high score for the local machine is displayed directly below the lives in the top left corner. Every time the high score 
 is changed, it is saved into the scores file. The file is searched through using an optimization loop. The highest score out of all
 is found and displayed. The overall high score updates during the game if the player manages to score higher.
 
-Below the overall high score is the high score for the player in session. Every time a new screen is opened, the high score is set
+2. Below the overall high score is the high score for the player in session. Every time a new screen is opened, the high score is set
 to zero, as a new session has begun. However, the score does not reset when the new game button is pressed. The high school updates
 every time the player scores above the player's personal high score during the game.
 
-Every time the player advances a level, an extra life is added to the player's life line. It is also displayed on the screen.
+3. Every time the player advances a level, an extra life is added to the player's life line. It is also displayed on the screen.
 
-The game can be played on a new set of keys. L is to move right; J is to move left; K is to fire a bullet; I is to accelerate. 
+4. The game can be played on a new set of keys. L is to move right; J is to move left; K is to fire a bullet; I is to accelerate. 
+
+5. The shape of the ship has changed to the shape of an actual ship on the ocean. On the ship, there is a person standing. When the
+ship accelerates, the person "falls" off of the ship and disappears from the ship. However, when the ship stops accelerating, 
+the person "climbs" backs onto the ship and into his normal position.
