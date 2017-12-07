@@ -478,9 +478,17 @@ public class Controller implements KeyListener, ActionListener
                 
                 ship.accelerate();
                 
-                ship.moveToShip(-14, -5);
-                ship.addLine(-24, 0);
-                ship.addLine(-14, 5);
+                if (isEnhanced == false)
+                {
+                    ship.moveToShip(-14, -5);
+                    ship.addLine(-24, 0);
+                    ship.addLine(-14, 5);
+                }
+                else
+                {
+                    ship.resetShape();
+                    ship.createShipE();
+                }
             }
             if (bulletFire && ship != null)
             {
@@ -610,7 +618,15 @@ public class Controller implements KeyListener, ActionListener
         {
             goingForward = false;
             ship.resetShape();
-            ship.createShip();
+            if (isEnhanced == false)
+            {
+                ship.createShip();
+            }
+            else
+            {
+                ship.createShipE();
+                ship.createPersonStanding();
+            }
         }
         if ((e.getKeyCode() == KeyEvent.VK_SPACE || e.getKeyCode() == KeyEvent.VK_DOWN || e.getKeyCode() == KeyEvent.VK_S) && ship != null)
         {
@@ -626,7 +642,15 @@ public class Controller implements KeyListener, ActionListener
             if (e.getKeyCode() == KeyEvent.VK_I) {
                 goingForward = false;
                 ship.resetShape();
-                ship.createShip();
+                if (isEnhanced == false)
+                {
+                    ship.createShip();
+                }
+                else
+                {
+                    ship.createShipE();
+                    ship.createPersonStanding();
+                }
             }
             if (e.getKeyCode() == KeyEvent.VK_K) {
                 bulletFire = false;
