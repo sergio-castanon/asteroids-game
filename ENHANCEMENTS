@@ -15,3 +15,5 @@ every time the player scores above the player's personal high score during the g
 5. The shape of the ship has changed to the shape of an actual ship on the ocean. On the ship, there is a person standing. When the
 ship accelerates, the person "falls" off of the ship and disappears from the ship. However, when the ship stops accelerating, 
 the person "climbs" backs onto the ship and into his normal position.
+
+6. The display for the score, lives left, and level, and high scores are rapidly changing color. It gives a fum effect to the game.
