@@ -33,9 +33,6 @@ public class Controller implements KeyListener, ActionListener
     
     /** When this timer goes off, it is time to place an alien ship */
     private Timer newAlienShip; 
-    
-    /** When this timer goes off, it is time to fire a bullet */
-    private Timer alienFireBullet;
 
     /** Keeps track of the key press of the right arrow or D */
     private boolean turningRight;
@@ -278,9 +275,6 @@ public class Controller implements KeyListener, ActionListener
         { 
             newAlienShip = new Timer(((RANDOM.nextInt(6) + 5) * 1000) + END_DELAY, this); 
             newAlienShip.start();
-            
-            alienFireBullet = new Timer(((RANDOM.nextInt(4) + 1) * 1000) + END_DELAY, this);
-            alienFireBullet.start();
         } 
     }
 
@@ -367,9 +361,6 @@ public class Controller implements KeyListener, ActionListener
         // Timer for new alien ship in 5-10 secs
         newAlienShip = new Timer((RANDOM.nextInt(6) + 5) * 1000, this); 
         newAlienShip.start(); 
-        
-        alienFireBullet = new Timer(((RANDOM.nextInt(4) + 1) * 1000) + END_DELAY, this);
-        alienFireBullet.start();
     }
 
     /**
@@ -442,21 +433,6 @@ public class Controller implements KeyListener, ActionListener
                 alienShip = new AlienShip(0, this);
                 addParticipant(alienShip); 
             } 
-        }
-        
-        else if (e.getSource() == alienFireBullet)
-        {
-            if (this.level >= 2 && ship != null && alienShip != null)
-            {
-                if (ship.getX() > SIZE / 2 && alienShip.getX() < SIZE / 2)
-                {
-                    addParticipant(new AlienBullet(alienShip.getXRight(), alienShip.getYRight(), RANDOM.nextDouble() * 2 * Math.PI, this));
-                }
-                else
-                {
-                    addParticipant(new AlienBullet(alienShip.getXLeft(), alienShip.getYLeft(), RANDOM.nextDouble() * 2 * Math.PI, this));
-                }
-            }
         }
 
         // Time to refresh the screen and deal with keyboard input
