@@ -31,7 +31,15 @@ public class Ship extends Participant implements AsteroidDestroyer, AlienShipDes
         setPosition(x, y);
         setRotation(direction);
 
-        createShip();
+        if (controller.enhanced() == false)
+        {
+            createShip();
+        }
+        else
+        {
+            createShipE();
+            createPersonStanding();
+        }
     }
     /**
      * Creates the shape of the ship
@@ -46,6 +54,44 @@ public class Ship extends Participant implements AsteroidDestroyer, AlienShipDes
         poly.lineTo(21, 0);
         poly.closePath();
         outline = poly; 
+    }
+        /**
+     * Creates the shape of the ship in the enhanced version
+     */
+    public void createShipE ()
+    {
+        this.poly = new Path2D.Double();
+        poly.moveTo(20, 0);
+        poly.lineTo(0, 10);
+        poly.lineTo(0, 0);
+        poly.lineTo(-30, 0);
+        poly.lineTo(-30, 40);
+        poly.lineTo(-70, -10);
+        poly.lineTo(-30, -60);
+        poly.lineTo(-30, 0);
+        poly.closePath();
+        outline = poly;
+    }
+    
+    /**
+     * Creates a person standing on the ship
+     */
+    public void createPersonStanding ()
+    {
+        poly.moveTo(-30, -50);
+        poly.lineTo(-25, -45);
+        poly.lineTo(-30, -40);
+        poly.lineTo(-25, -45);
+        poly.lineTo(-5, -45);
+        poly.lineTo(0, -50);
+        poly.lineTo(-5, -45);
+        poly.lineTo(0, -40);
+        poly.lineTo(-5, -45);
+        poly.lineTo(5, -45);
+        poly.lineTo(10, -50);
+        poly.lineTo(15, -45);
+        poly.lineTo(10, -40);
+        poly.lineTo(5, -45);
     }
     
      /**

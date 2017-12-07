@@ -283,6 +283,7 @@ public class Controller implements KeyListener, ActionListener
         {
             newAlienShip = new Timer(((RANDOM.nextInt(6) + 5) * 1000) + END_DELAY, this);
             newAlienShip.start();
+
         }
     }
 
