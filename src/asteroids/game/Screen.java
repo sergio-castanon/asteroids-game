@@ -13,22 +13,22 @@ public class Screen extends JPanel
 {
     /** Legend that is displayed across the screen */
     private String legend;
-    
+
     /** Game controller */
-    private Controller controller; 
-    
+    private Controller controller;
+
     /** Number of lives left */
     private int lives;
-    
+
     /** Level of the game */
-    private int levels;    
-    
+    private int levels;
+
     /** Score of the game */
     private int score;
     
     /** Keeps track if the game is enhanced */
     private boolean isEnhanced = false;
-
+    
     /**
      * Creates an empty screen
      */
@@ -50,52 +50,57 @@ public class Screen extends JPanel
     public void setLegend (String legend)
     {
         this.legend = legend;
-    }  
-    
+    }
+
     /**
-    * Sets the lives
-    */
-    public void setLives (int lives) {
+     * Sets the lives
+     */
+    public void setLives (int lives)
+    {
         this.lives = lives;
     }
+
+    /**
+     * Sets the level
+     */
+    public void setLevel (int level)
+    {
+        this.levels = level;
+    }
+
+    /**
+     * Sets the score
+     */
+    public void setScore (int score)
+    {
+        this.score = score;
+    }
+
+    /**
+     * Decreases the lives count by 1
+     */
+    public void decreaseLives ()
+    {
+        this.lives--;
+    }
     
-     /**
+    /**
      * Increases the lives count by 1
      */
     public void increasesLives ()
     {
         this.lives++;
     }
-    
+
     /**
-    * Sets the level
-    */
-    public void setLevel(int level) {
-        this.levels = level;
-    }    
-    
-    /**
-    * Sets the score
-    */
-    public void setScore(int score) {
-        this.score = score;
-    }    
-    
-    /**
-    * Decreases the lives count by 1
-    */
-    public void decreaseLives() {
-        this.lives--;
-    }    
-    
-    /**
-    * Increases the levels count by 1
-    */
-    public void increaseLevels() {
+     * Increases the levels count by 1
+     */
+    public void increaseLevels ()
+    {
         this.levels++;
     }
     
-     /**
+    /**
      * Sets enhanced mode to true
      */
     public void isEnhanced() {
@@ -121,20 +126,29 @@ public class Screen extends JPanel
         while (iter.hasNext())
         {
             iter.next().draw(g);
-        } 
-        // Keeps track of the original font
+        }
+        // Keeps track of the original font and color
         Font font = g.getFont();
-        
+        Color color = g.getColor();
+
         // The spacing between each ship
         int incremenation = 30;
-        
+
         // Keeps track of how many lives are left and need to be displayed
-        int countAtLives = lives; 
+        int countAtLives = lives;
         
+        float r = RANDOM.nextFloat();
+        float h = RANDOM.nextFloat() / 2f;
+        float b = RANDOM.nextFloat() / 2f;
+
         // Creates the graphics to keep track of the lives left
-        while (countAtLives > 0) {
+        while (countAtLives > 0)
+        {
             g.setFont(new Font("TimesRoman", font.getStyle(), 28));
-            g.drawString(Integer.toString(score), 55, 30); 
+            if (isEnhanced) {
+                g.setColor(new Color(r,h, b));
+            }
+            g.drawString(Integer.toString(score), 55, 30);
             g.drawString(Integer.toString(levels), SIZE - 55, 30);
             g.drawLine(-20 + incremenation, 50, -30 + incremenation, 80);
             g.drawLine(-20 + incremenation, 50, -10 + incremenation, 80);
@@ -146,14 +160,15 @@ public class Screen extends JPanel
                 g.drawString("Your High Score", 5, 125);
                 g.drawString(Integer.toString(Statistics.getSessionHighScore()), 190, 125);
             }
-            incremenation+= 50;
+            incremenation += 50;
             countAtLives--;
         }
 
         // Draw the legend across the middle of the panel
         g.setFont(font);
         int size = g.getFontMetrics().stringWidth(legend);
-        g.drawString(legend, (SIZE - size) / 2, SIZE / 2); 
-        
+        g.drawString(legend, (SIZE - size) / 2, SIZE / 2);
+
     }
+
 }
