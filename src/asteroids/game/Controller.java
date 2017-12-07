@@ -125,7 +125,13 @@ public class Controller implements KeyListener, ActionListener
         isEnhanced = true;
         display.isEnhanced(); 
     }
-    
+    /**
+     * Returns if the game is enhanced
+     */
+    public boolean enhanced ()
+    {
+        return isEnhanced;
+    }
 
     /**
      * Fills the array containing the sound strings
